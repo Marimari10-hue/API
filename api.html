@@ -4,46 +4,103 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>API Escola</title>
+<title>Sistema da Escola</title>
 
 <style>
 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
     font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    padding: 40px 20px;
+}
+
+.container{
+    max-width: 1000px;
+    margin: auto;
 }
 
 h1{
     text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
 }
 
 .botoes{
-    text-align: center;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
 button{
-    padding: 10px 20px;
-    margin: 5px;
+    background: white;
+    color: #4f46e5;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+}
+
+button:hover{
+    transform: translateY(-4px);
+    background: #f3f4f6;
 }
 
 #resultado{
-    background: #f4f4f4;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    min-height: 200px;
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    min-height: 250px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
 }
 
 .card{
-    background: white;
-    border: 1px solid #ddd;
-    padding: 10px;
+    background: #f8fafc;
+    border-left: 6px solid #4f46e5;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: .3s;
+}
+
+.card:hover{
+    transform: scale(1.02);
+}
+
+.card h2,
+.card h3{
+    color: #4f46e5;
     margin-bottom: 10px;
-    border-radius: 6px;
+}
+
+.card p{
+    color: #444;
+    margin: 5px 0;
+}
+
+@media(max-width:600px){
+
+    h1{
+        font-size: 2rem;
+    }
+
+    button{
+        width: 100%;
+    }
+
 }
 
 </style>
@@ -51,26 +108,30 @@ button{
 </head>
 <body>
 
-<h1>🏫 Sistema da Escola</h1>
+<div class="container">
 
-<div class="botoes">
+    <h1>🏫 Sistema da Escola</h1>
 
-    <button onclick="buscarAlunos()">
-        Mostrar Alunos
-    </button>
+    <div class="botoes">
 
-    <button onclick="buscarCursos()">
-        Mostrar Cursos
-    </button>
+        <button onclick="buscarAlunos()">
+            👨‍🎓 Mostrar Alunos
+        </button>
 
-    <button onclick="buscarProfessor()">
-        Mostrar Professor
-    </button>
+        <button onclick="buscarCursos()">
+            📚 Mostrar Cursos
+        </button>
 
-</div>
+        <button onclick="buscarProfessor()">
+            👨‍🏫 Mostrar Professor
+        </button>
 
-<div id="resultado">
-    Clique em um botão para buscar dados.
+    </div>
+
+    <div id="resultado">
+        Clique em um botão para buscar informações da escola.
+    </div>
+
 </div>
 
 <script>
@@ -87,20 +148,28 @@ function buscarAlunos(){
     .then(res => res.json())
     .then(dados => {
 
-        resultado.innerHTML = "";
+        resultado.innerHTML = "<h2>👨‍🎓 Alunos</h2><br>";
 
         dados.forEach(aluno => {
 
             resultado.innerHTML += `
                 <div class="card">
                     <h3>${aluno.nome}</h3>
-                    <p>ID: ${aluno.id}</p>
-                    <p>Idade: ${aluno.idade}</p>
+                    <p><strong>ID:</strong> ${aluno.id}</p>
+                    <p><strong>Idade:</strong> ${aluno.idade} anos</p>
                 </div>
             `;
 
         });
 
+    })
+    .catch(() => {
+        resultado.innerHTML = `
+            <div class="card">
+                <h3>Erro</h3>
+                <p>Não foi possível carregar os alunos.</p>
+            </div>
+        `;
     });
 
 }
@@ -115,19 +184,27 @@ function buscarCursos(){
     .then(res => res.json())
     .then(dados => {
 
-        resultado.innerHTML = "";
+        resultado.innerHTML = "<h2>📚 Cursos</h2><br>";
 
         dados.forEach(curso => {
 
             resultado.innerHTML += `
                 <div class="card">
                     <h3>${curso.curso}</h3>
-                    <p>ID: ${curso.id}</p>
+                    <p><strong>ID:</strong> ${curso.id}</p>
                 </div>
             `;
 
         });
 
+    })
+    .catch(() => {
+        resultado.innerHTML = `
+            <div class="card">
+                <h3>Erro</h3>
+                <p>Não foi possível carregar os cursos.</p>
+            </div>
+        `;
     });
 
 }
@@ -143,12 +220,22 @@ function buscarProfessor(){
     .then(dados => {
 
         resultado.innerHTML = `
+            <h2>👨‍🏫 Professor</h2><br>
+
             <div class="card">
-                <h2>${dados.nome}</h2>
-                <p>Disciplina: ${dados.disciplina}</p>
+                <h3>${dados.nome}</h3>
+                <p><strong>Disciplina:</strong> ${dados.disciplina}</p>
             </div>
         `;
 
+    })
+    .catch(() => {
+        resultado.innerHTML = `
+            <div class="card">
+                <h3>Erro</h3>
+                <p>Não foi possível carregar os dados do professor.</p>
+            </div>
+        `;
     });
 
 }
