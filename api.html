@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title></title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+.botoes{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button{
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#resultado{
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 200px;
+}
+
+.card{
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+</style>
+
+</head>
+<body>
+
+<h1>🚀 Consumindo API Node.js</h1>
+
+<div class="botoes">
+
+    <button onclick="buscarAlunos()">
+        Alunos
+    </button>
+
+    <button onclick="buscarProdutos()">
+        Produtos
+    </button>
+
+    <button onclick="buscarEmpresa()">
+        Empresa
+    </button>
+
+</div>
+
+<div id="resultado">
+    Clique em um botão para buscar dados.
+</div>
+
+<script>
+
+const resultado = document.querySelector("#resultado");
+
+// ====================
+// ALUNOS
+// ====================
+
+function buscarAlunos(){
+
+    fetch("http://localhost:3000/alunos")
+        .then(res => res.json())
+        .then(dados => {
+
+            resultado.innerHTML = "";
+
+            dados.forEach(aluno => {
+
+                resultado.innerHTML += `
+                    <div class="card">
+                        <h3>${aluno.nome}</h3>
+                        <p>ID: ${aluno.id}</p>
+                        <p>Idade: ${aluno.idade}</p>
+                    </div>
+                `;
+
+            });
+
+        });
+
+}
+
+// ====================
+// PRODUTOS
+// ====================
+
+function buscarProdutos(){
+
+    fetch("http://localhost:3000/produtos")
+        .then(res => res.json())
+        .then(dados => {
+
+            resultado.innerHTML = "";
+
+            dados.forEach(produto => {
+
+                resultado.innerHTML += `
+                    <div class="card">
+                        <h3>${produto.nome}</h3>
+                        <p>ID: ${produto.id}</p>
+                        <p>Preço: R$ ${produto.preco}</p>
+                    </div>
+                `;
+
+            });
+
+        });
+
+}
+
+// ====================
+// EMPRESA
+// ====================
+
+function buscarEmpresa(){
+
+    fetch("http://localhost:3000/empresa")
+        .then(res => res.json())
+        .then(dados => {
+
+            resultado.innerHTML = `
+                <div class="card">
+                    <h2>${dados.nome}</h2>
+                    <p>Cidade: ${dados.cidade}</p>
+                    <p>Segmento: ${dados.segmento}</p>
+                </div>
+            `;
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>
