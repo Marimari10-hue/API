@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title></title>
+<title>API Escola</title>
 
 <style>
 
@@ -51,20 +51,20 @@ button{
 </head>
 <body>
 
-<h1>🚀 Consumindo API Node.js</h1>
+<h1>🏫 Sistema da Escola</h1>
 
 <div class="botoes">
 
     <button onclick="buscarAlunos()">
-        Alunos
+        Mostrar Alunos
     </button>
 
-    <button onclick="buscarProdutos()">
-        Produtos
+    <button onclick="buscarCursos()">
+        Mostrar Cursos
     </button>
 
-    <button onclick="buscarEmpresa()">
-        Empresa
+    <button onclick="buscarProfessor()">
+        Mostrar Professor
     </button>
 
 </div>
@@ -84,74 +84,72 @@ const resultado = document.querySelector("#resultado");
 function buscarAlunos(){
 
     fetch("http://localhost:3000/alunos")
-        .then(res => res.json())
-        .then(dados => {
+    .then(res => res.json())
+    .then(dados => {
 
-            resultado.innerHTML = "";
+        resultado.innerHTML = "";
 
-            dados.forEach(aluno => {
+        dados.forEach(aluno => {
 
-                resultado.innerHTML += `
-                    <div class="card">
-                        <h3>${aluno.nome}</h3>
-                        <p>ID: ${aluno.id}</p>
-                        <p>Idade: ${aluno.idade}</p>
-                    </div>
-                `;
-
-            });
-
-        });
-
-}
-
-// ====================
-// PRODUTOS
-// ====================
-
-function buscarProdutos(){
-
-    fetch("http://localhost:3000/produtos")
-        .then(res => res.json())
-        .then(dados => {
-
-            resultado.innerHTML = "";
-
-            dados.forEach(produto => {
-
-                resultado.innerHTML += `
-                    <div class="card">
-                        <h3>${produto.nome}</h3>
-                        <p>ID: ${produto.id}</p>
-                        <p>Preço: R$ ${produto.preco}</p>
-                    </div>
-                `;
-
-            });
-
-        });
-
-}
-
-// ====================
-// EMPRESA
-// ====================
-
-function buscarEmpresa(){
-
-    fetch("http://localhost:3000/empresa")
-        .then(res => res.json())
-        .then(dados => {
-
-            resultado.innerHTML = `
+            resultado.innerHTML += `
                 <div class="card">
-                    <h2>${dados.nome}</h2>
-                    <p>Cidade: ${dados.cidade}</p>
-                    <p>Segmento: ${dados.segmento}</p>
+                    <h3>${aluno.nome}</h3>
+                    <p>ID: ${aluno.id}</p>
+                    <p>Idade: ${aluno.idade}</p>
                 </div>
             `;
 
         });
+
+    });
+
+}
+
+// ====================
+// CURSOS
+// ====================
+
+function buscarCursos(){
+
+    fetch("http://localhost:3000/cursos")
+    .then(res => res.json())
+    .then(dados => {
+
+        resultado.innerHTML = "";
+
+        dados.forEach(curso => {
+
+            resultado.innerHTML += `
+                <div class="card">
+                    <h3>${curso.curso}</h3>
+                    <p>ID: ${curso.id}</p>
+                </div>
+            `;
+
+        });
+
+    });
+
+}
+
+// ====================
+// PROFESSOR
+// ====================
+
+function buscarProfessor(){
+
+    fetch("http://localhost:3000/professor")
+    .then(res => res.json())
+    .then(dados => {
+
+        resultado.innerHTML = `
+            <div class="card">
+                <h2>${dados.nome}</h2>
+                <p>Disciplina: ${dados.disciplina}</p>
+            </div>
+        `;
+
+    });
 
 }
 

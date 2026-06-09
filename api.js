@@ -30,35 +30,17 @@ const cursos = [
     },
     {
         id: 2,
-        curso:"Design"
+        curso: "Design"
     },
     {
         id: 3,
-        curso:"Engenheiro de sortware"
-    }
-];
-const professor = [
-    {
-        id: 1,
-        nome:"Ruan Pedro"
-        diciplina: "Desenvolvimento de Jogos"
-    },
-    {
-        id: 2,
-        nome:"Aline Rodriguez"
-        diciplina:"Design"
-    },
-    {
-        id: 3,
-        nome:"Carlota Joaquina"
-        diciplina:"Engenheiro de sortware"
+        curso: "Engenharia de Software"
     }
 ];
 
-const escola = {
-    nome: "Iris High Technology",
-    cidade: "Recife",
-    segmento: "Tecnologia"
+const professor = {
+    nome: "Ruan Pedro",
+    disciplina: "Desenvolvimento de Jogos"
 };
 
 // ====================
@@ -67,13 +49,10 @@ const escola = {
 
 const servidor = http.createServer((req, res) => {
 
-    // Permite acesso da página HTML
     res.setHeader("Access-Control-Allow-Origin", "*");
-
-    // Define que a resposta será JSON
     res.setHeader("Content-Type", "application/json");
 
-    // Rota inicial
+    // Página inicial
     if (req.url === "/") {
 
         res.end(JSON.stringify({
@@ -82,24 +61,24 @@ const servidor = http.createServer((req, res) => {
 
     }
 
-    // Rota alunos
+    // Alunos
     else if (req.url === "/alunos") {
 
         res.end(JSON.stringify(alunos));
 
     }
 
-    // Rota produtos
-    else if (req.url === "/curso") {
+    // Cursos
+    else if (req.url === "/cursos") {
 
-        res.end(JSON.stringify(produtos));
+        res.end(JSON.stringify(cursos));
 
     }
 
-    // Rota empresa
-    else if (req.url === "/empresa") {
+    // Professor
+    else if (req.url === "/professor") {
 
-        res.end(JSON.stringify(empresa));
+        res.end(JSON.stringify(professor));
 
     }
 
@@ -116,7 +95,6 @@ const servidor = http.createServer((req, res) => {
 
 });
 
-// Inicia servidor
 servidor.listen(3000, () => {
 
     console.log("🚀 API rodando!");
